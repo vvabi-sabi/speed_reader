@@ -141,16 +141,15 @@ class TextReader:
         self.delay = max(0, 60/self.wps)
     
     def __getitem__(self, item):
-        word = self.text_list[item+1]
+        word = self.text_list[item]
+        previous_word = self.text_list[item-1]
         delay = self.delay
         if item == 0:
-            delay = delay * 3
-        #if len(word) < 3:
-        #    delay = delay * 0.75
-        if word[-1] in self.delay_symbol:
+            delay = delay * 2
+        if previous_word[-1] in self.delay_symbol:
             delay = delay * 5
-        if abs(self.item - item) > 2:
-            delay = delay * 3
+        #if abs(self.item - item) > 2:
+        #    delay = delay * 3
         self.item = item
         return delay, word
    
